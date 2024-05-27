@@ -1,5 +1,7 @@
 # tinyrpc
 
+original repositiory: [tinyrpc](https://github.com/zehuamama/tinyrpc)
+
 [![Go Report Card](https://goreportcard.com/badge/github.com/zehuamama/tinyrpc)&nbsp;](https://goreportcard.com/report/github.com/zehuamama/tinyrpc)![GitHub top language](https://img.shields.io/github/languages/top/zehuamama/tinyrpc)&nbsp;![GitHub](https://img.shields.io/github/license/zehuamama/tinyrpc)&nbsp;[![CodeFactor](https://www.codefactor.io/repository/github/zehuamama/tinyrpc/badge)](https://www.codefactor.io/repository/github/zehuamama/tinyrpc)&nbsp;[![codecov](https://codecov.io/gh/zehuamama/tinyrpc/branch/main/graph/badge.svg)](https://codecov.io/gh/zehuamama/tinyrpc)&nbsp; ![go_version](https://img.shields.io/badge/go%20version-1.22-yellow)
 
 tinyrpc is a high-performance RPC framework based on `protocol buffer` encoding. It is based on `net/rpc` and supports multiple compression formats (`gzip`, `snappy`, `zlib`).
