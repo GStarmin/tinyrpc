@@ -1,6 +1,6 @@
 # tinyrpc
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/zehuamama/tinyrpc)&nbsp;](https://goreportcard.com/report/github.com/zehuamama/tinyrpc)![GitHub top language](https://img.shields.io/github/languages/top/zehuamama/tinyrpc)&nbsp;![GitHub](https://img.shields.io/github/license/zehuamama/tinyrpc)&nbsp;[![CodeFactor](https://www.codefactor.io/repository/github/zehuamama/tinyrpc/badge)](https://www.codefactor.io/repository/github/zehuamama/tinyrpc)&nbsp;[![codecov](https://codecov.io/gh/zehuamama/tinyrpc/branch/main/graph/badge.svg)](https://codecov.io/gh/zehuamama/tinyrpc)&nbsp; ![go_version](https://img.shields.io/badge/go%20version-1.17-yellow)
+[![Go Report Card](https://goreportcard.com/badge/github.com/zehuamama/tinyrpc)&nbsp;](https://goreportcard.com/report/github.com/zehuamama/tinyrpc)![GitHub top language](https://img.shields.io/github/languages/top/zehuamama/tinyrpc)&nbsp;![GitHub](https://img.shields.io/github/license/zehuamama/tinyrpc)&nbsp;[![CodeFactor](https://www.codefactor.io/repository/github/zehuamama/tinyrpc/badge)](https://www.codefactor.io/repository/github/zehuamama/tinyrpc)&nbsp;[![codecov](https://codecov.io/gh/zehuamama/tinyrpc/branch/main/graph/badge.svg)](https://codecov.io/gh/zehuamama/tinyrpc)&nbsp; ![go_version](https://img.shields.io/badge/go%20version-1.22-yellow)
 
 tinyrpc is a high-performance RPC framework based on `protocol buffer` encoding. It is based on `net/rpc` and supports multiple compression formats (`gzip`, `snappy`, `zlib`).
 
@@ -220,11 +220,5 @@ Remember that when the rpc client calls the service, it also needs to set the se
 ```go
 tinyrpc.NewClient(conn,tinyrpc.WithSerializer(JsonSerializer{}))
 ```
-## Contributing
 
-If you are intersted in contributing to tinyrpc, please see here: [CONTRIBUTING](https://github.com/zehuamama/tinyrpc/blob/main/CONTRIBUTING.md)
-
-## License
-
-tinyrpc is licensed under the term of the [BSD 2-Clause License](https://github.com/zehuamama/tinyrpc/blob/main/LICENSE)
 
