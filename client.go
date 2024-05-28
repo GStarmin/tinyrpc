@@ -8,9 +8,9 @@ import (
 	"io"
 	"net/rpc"
 
-	"github.com/zehuamama/tinyrpc/codec"
-	"github.com/zehuamama/tinyrpc/compressor"
-	"github.com/zehuamama/tinyrpc/serializer"
+	"github.com/GStarmin/tinyrpc/codec"
+	"github.com/GStarmin/tinyrpc/compressor"
+	"github.com/GStarmin/tinyrpc/serializer"
 )
 
 // Client rpc client based on net/rpc implementation
