@@ -235,12 +235,12 @@ func TestServer_Register(t *testing.T) {
 type Json struct{}
 
 // Marshal .
-func (_ *Json) Marshal(message interface{}) ([]byte, error) {
+func (*Json) Marshal(message interface{}) ([]byte, error) {
 	return json.Marshal(message)
 }
 
 // Unmarshal .
-func (_ *Json) Unmarshal(data []byte, message interface{}) error {
+func (*Json) Unmarshal(data []byte, message interface{}) error {
 	return json.Unmarshal(data, message)
 }
 

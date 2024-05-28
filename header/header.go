@@ -8,7 +8,7 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/zehuamama/tinyrpc/compressor"
+	"github.com/GStarmin/tinyrpc/compressor"
 )
 
 const (

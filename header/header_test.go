@@ -5,9 +5,10 @@
 package header
 
 import (
-	"github.com/zehuamama/tinyrpc/compressor"
 	"reflect"
 	"testing"
+
+	"github.com/GStarmin/tinyrpc/compressor"
 
 	"github.com/stretchr/testify/assert"
 )

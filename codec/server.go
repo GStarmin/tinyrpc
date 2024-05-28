@@ -10,9 +10,10 @@ import (
 	"io"
 	"net/rpc"
 	"sync"
-	"tinyrpc/compressor"
-	"tinyrpc/header"
-	"tinyrpc/serializer"
+
+	"github.com/GStarmin/tinyrpc/compressor"
+	"github.com/GStarmin/tinyrpc/header"
+	"github.com/GStarmin/tinyrpc/serializer"
 )
 
 type reqCtx struct {
