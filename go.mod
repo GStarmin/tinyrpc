@@ -1,6 +1,6 @@
 module github.com/GStarmin/tinyrpc
 
-go 1.22.0
+go 1.22
 
 require (
 	github.com/golang/snappy v0.0.4
