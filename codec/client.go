@@ -11,9 +11,9 @@ import (
 	"net/rpc"
 	"sync"
 
-	"github.com/zehuamama/tinyrpc/compressor"
-	"github.com/zehuamama/tinyrpc/header"
-	"github.com/zehuamama/tinyrpc/serializer"
+	"github.com/GStarmin/tinyrpc/compressor"
+	"github.com/GStarmin/tinyrpc/header"
+	"github.com/GStarmin/tinyrpc/serializer"
 )
 
 type clientCodec struct {
