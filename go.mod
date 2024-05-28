@@ -5,7 +5,6 @@ go 1.22
 require (
 	github.com/golang/snappy v0.0.4
 	github.com/stretchr/testify v1.9.0
-	github.com/zehuamama/tinyrpc v0.3.1
 	google.golang.org/protobuf v1.34.1
 )
 
