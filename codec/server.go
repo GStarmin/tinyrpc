@@ -76,29 +76,33 @@ func (s *serverCodec) ReadRequestBody(param interface{}) error {
 	}
 
 	reqBody := make([]byte, s.request.RequestLen)
-
+	// 根据请求体的大小，读取该大小的字节串
 	err := read(s.r, reqBody)
 	if err != nil {
 		return err
 	}
 
+	// checksum
 	if s.request.Checksum != 0 {
 		if crc32.ChecksumIEEE(reqBody) != s.request.Checksum {
 			return UnexpectedChecksumError
 		}
 	}
 
+	// check compressor type
 	if _, ok := compressor.
 		Compressors[s.request.GetCompressType()]; !ok {
 		return NotFoundCompressorError
 	}
 
+	// 解压缩请求体
 	req, err := compressor.
 		Compressors[s.request.GetCompressType()].Unzip(reqBody)
 	if err != nil {
 		return err
 	}
 
+	// 反序列化
 	return s.serializer.Unmarshal(req, param)
 }
 
@@ -116,6 +120,8 @@ func (s *serverCodec) WriteResponse(r *rpc.Response, param interface{}) error {
 	if r.Error != "" {
 		param = nil
 	}
+
+	// check compressor type
 	if _, ok := compressor.
 		Compressors[reqCtx.compareType]; !ok {
 		return NotFoundCompressorError
@@ -130,6 +136,7 @@ func (s *serverCodec) WriteResponse(r *rpc.Response, param interface{}) error {
 		}
 	}
 
+	// 压缩响应体
 	compressedRespBody, err := compressor.
 		Compressors[reqCtx.compareType].Zip(respBody)
 	if err != nil {
@@ -146,10 +153,12 @@ func (s *serverCodec) WriteResponse(r *rpc.Response, param interface{}) error {
 	h.Checksum = crc32.ChecksumIEEE(compressedRespBody)
 	h.CompressType = reqCtx.compareType
 
+	// send response header
 	if err = sendFrame(s.w, h.Marshal()); err != nil {
 		return err
 	}
 
+	// send response body
 	if err = write(s.w, compressedRespBody); err != nil {
 		return err
 	}

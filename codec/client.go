@@ -25,7 +25,7 @@ type clientCodec struct {
 	serializer serializer.Serializer
 	response   header.ResponseHeader // rpc response header
 	mutex      sync.Mutex            // protect pending map
-	pending    map[uint64]string
+	pending    map[uint64]string     // pending map is used to store the request id and method name
 }
 
 // NewClientCodec Create a new client codec
@@ -59,6 +59,7 @@ func (c *clientCodec) WriteRequest(r *rpc.Request, param interface{}) error {
 	if err != nil {
 		return err
 	}
+	// take a RequestHeader object from the pool, return value of Get() is interface{}
 	h := header.RequestPool.Get().(*header.RequestHeader)
 	defer func() {
 		h.ResetHeader()
@@ -70,9 +71,12 @@ func (c *clientCodec) WriteRequest(r *rpc.Request, param interface{}) error {
 	h.CompressType = compressor.CompressType(c.compressor)
 	h.Checksum = crc32.ChecksumIEEE(compressedReqBody)
 
+	// send request header
 	if err := sendFrame(c.w, h.Marshal()); err != nil {
 		return err
 	}
+
+	// send request body
 	if err := write(c.w, compressedReqBody); err != nil {
 		return err
 	}
@@ -93,10 +97,10 @@ func (c *clientCodec) ReadResponseHeader(r *rpc.Response) error {
 		return err
 	}
 	c.mutex.Lock()
-	r.Seq = c.response.ID
-	r.Error = c.response.Error
-	r.ServiceMethod = c.pending[r.Seq]
-	delete(c.pending, r.Seq)
+	r.Seq = c.response.ID              // fill the seq id
+	r.Error = c.response.Error         // fill the error message
+	r.ServiceMethod = c.pending[r.Seq] // get the method name according to seq id
+	delete(c.pending, r.Seq)           // delete seq id from pending map
 	c.mutex.Unlock()
 	return nil
 }
@@ -104,7 +108,7 @@ func (c *clientCodec) ReadResponseHeader(r *rpc.Response) error {
 // ReadResponseBody read the rpc response body from the io stream
 func (c *clientCodec) ReadResponseBody(param interface{}) error {
 	if param == nil {
-		if c.response.ResponseLen != 0 {
+		if c.response.ResponseLen != 0 { // 废弃多余部分 Discard the redundant part
 			if err := read(c.r, make([]byte, c.response.ResponseLen)); err != nil {
 				return err
 			}
@@ -118,21 +122,25 @@ func (c *clientCodec) ReadResponseBody(param interface{}) error {
 		return err
 	}
 
+	// check the checksum
 	if c.response.Checksum != 0 {
 		if crc32.ChecksumIEEE(respBody) != c.response.Checksum {
 			return UnexpectedChecksumError
 		}
 	}
 
+	// check does the compress type match
 	if c.response.GetCompressType() != c.compressor {
 		return CompressorTypeMismatchError
 	}
 
+	// uncompress the response body
 	resp, err := compressor.Compressors[c.response.GetCompressType()].Unzip(respBody)
 	if err != nil {
 		return err
 	}
 
+	// deserialize
 	return c.serializer.Unmarshal(resp, param)
 }
 

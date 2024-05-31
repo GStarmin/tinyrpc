@@ -7,7 +7,7 @@
 // 	protoc-gen-go v1.28.0
 // 	protoc        v3.19.1
 // source: arith.proto
-
+// pb 文件：定义消息类型、序列化和反序列化逻辑，确保客户端和服务器之间的数据格式一致
 package message
 
 import (

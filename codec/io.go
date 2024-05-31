@@ -49,7 +49,7 @@ func recvFrame(r io.Reader) (data []byte, err error) {
 	return data, nil
 }
 
-// write the data to the writer.
+// write the body data to the writer.
 // writer is an interface that wraps the basic Write method.
 func write(w io.Writer, data []byte) error {
 	for index := 0; index < len(data); {
@@ -62,6 +62,7 @@ func write(w io.Writer, data []byte) error {
 	return nil
 }
 
+// read the data from the reader and store it in the data slice.
 func read(r io.Reader, data []byte) error {
 	for index := 0; index < len(data); {
 		n, err := r.Read(data[index:])
